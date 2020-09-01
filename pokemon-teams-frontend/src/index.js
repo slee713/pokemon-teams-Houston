@@ -33,7 +33,7 @@ function addTrainer(trainer) {
         
         let releaseBtn = document.createElement("button")
         releaseBtn.className = "release"
-        releaseBtn.setAttribute("data-pokemon-id", "140")
+        releaseBtn.setAttribute("data-pokemon-id", `${pokemon.id}`)
         releaseBtn.innerText = "Release"
         
         li.append(releaseBtn)
@@ -48,9 +48,9 @@ function addTrainer(trainer) {
             .then(pokemon => {
                 let index = trainer.pokemons.indexOf(pokemon)
                 trainer.pokemons.splice(index, 1)
+                li.remove()
             })
             
-            li.remove()
         })
     }
     div.append(pName, addButton, ul)
@@ -59,6 +59,7 @@ function addTrainer(trainer) {
 
     addButton.addEventListener("click", () => {
         event.preventDefault()
+        // debugger
         if (trainer.pokemons.length < 6){
             config = {
                 method: "POST",
@@ -74,7 +75,9 @@ function addTrainer(trainer) {
             .then(res => res.json())
             .then(pokemon => {
                 addPokemon(pokemon)
+                trainer.pokemons.push(pokemon)
             })
         }
+        // debugger;
     })
 }
